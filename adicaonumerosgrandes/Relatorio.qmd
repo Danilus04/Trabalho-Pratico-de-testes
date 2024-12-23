@@ -1,7 +1,7 @@
 ---
 title: "Relatório Trabalho Prático de Teste Baseado em Especificação"
 subtitle: "Método para adição de números inteiros muito, muito grandes"
-author: "Aluno Teste de Software"
+author: "Danilo Balman Garcia"
 toc: true
 toc-title: Sumário
 number-sections: false
@@ -28,143 +28,111 @@ Este documento descreve o processo usado pelo autor do livro texto da disciplina
 
 Use este relatório como um exemplo de como você deve confeccionar o seu relatório. Veja, não precisa ser idêntico ao que está aqui e, claro, não deve ser uma cópia deste documento.
 
-## Passo 2 - Explorar o funcionamento do programa
+## Passo 2: Explorando o Funcionamento do Programa em Teste
 
-Meu processo foi o seguinte:
+### Testes Realizados
 
-- Vamos ver o programa trabalhando em um caso de sucesso. Vou passar a string "abcd" com a tag ``open`` "a" e a tag ``close`` "d";
-  - <(``str``="abcd", ``open``="a", ``close``="d"), (["bc"])>
-- Em seguida, vamos ver o que acontece se houver várias substrings na string principal. Vou passar a string "abcdabcdab" com as mesmas tags ``open`` e ``close``;
-  - <(``str``="abcdabcdab", ``open``="a", ``close``="d"), (["bc", "bc"])>
-- Vou repetir o segundo teste, dobrando os "a"s e os "d"s em todos os parâmetros. Também mudei um dos "bc" para "bf", para que seja mais fácil verificar se o método retorna duas substrings diferentes;
-  - <(``str``="aabcddaabfddaab", ``open``="aa", ``close``="dd"), (["bc", "bf"])>
+1. **Caso de Sucesso Simples:**
+  - Entrada: `left = [2, 3]`, `right = [4, 2]`.
+  - Saída Esperada: `[6, 5]`.
+
+2. **Adição com Listas Vazias:**
+  - Entrada 1: `left = []`, `right = [1, 2, 3]`.
+    - Saída Esperada: `[1, 2, 3]`.
+  - Entrada 2: `left = [1, 2, 3]`, `right = []`.
+    - Saída Esperada: `[1, 2, 3]`.
+  - Entrada 3: `left = []`, `right = []`.
+    - Saída Esperada: `[]`.
+
+3. **Entrada Nula:**
+  - Entrada 1: `left = null`, `right = [1, 2, 3]`.
+    - Saída Esperada: `null`.
+  - Entrada 2: `left = [1, 2, 3]`, `right = null`.
+    - Saída Esperada: `null`.
+  - Entrada 3: `left = null`, `right = null`.
+    - Saída Esperada: `null`.
 
 ## Passo 3 - Identificar as partições
 
-### Para cada entrada individualmente
+### Identificação das Partições para o Método de Soma
 
-#### Parâmetro ``str``: 
-  
-``str`` pode ser qualquer string. A especificação menciona os casos nulos e vazios; eu os teria testado de qualquer maneira, porque eles são sempre bons casos de teste excepcionais. Dado que esta é uma string (que é basicamente uma lista de caracteres), também vou testar o que acontece se a string tiver comprimento 1.
+#### Parâmetro `left`:
+O parâmetro `left` representa um número grande como uma lista de dígitos. As partições identificadas incluem casos que devem ser tratados separadamente:
 
-- ``str`` com valor ``null``;
-- ``str`` vazia;
-- ``len(str)==1``;
-- ``len(str)>1`` (qualquer string).
+- `left` é `null`: Verifica se o método retorna `null` quando a entrada é nula.
+- `left` é uma lista vazia: Considera o número como `0`.
+- `left` contém dígitos válidos (`0-9`): Um caso padrão para verificar a operação de soma.
+- `left` contém valores fora do intervalo (`<0` ou `>9`): Deve lançar uma `IllegalArgumentException`.
 
-#### Parâmetro ``open``: 
+#### Parâmetro `right`:
+O comportamento do parâmetro `right` é simétrico ao do `left`. As partições incluem:
 
-``open`` também pode ser qualquer coisa. Vou tentar com nulo e vazio, pois aprendi com o parâmetro ``str`` que esses casos são especiais neste método. Também vou tentar strings com comprimento 1 e maior que 1.
+- `right` é `null`: Verifica se o método retorna `null` quando a entrada é nula.
+- `right` é uma lista vazia: Considera o número como `0`.
+- `right` contém dígitos válidos (`0-9`): Um caso padrão para verificar a operação de soma.
+- `right` contém valores fora do intervalo (`<0` ou `>9`): Deve lançar uma `IllegalArgumentException`.
 
-  - ``open`` com valor ``null``;
-  - ``open`` vazia;
-  - ``len(open)==1``;
-  - ``len(open)>1``.
+#### Casos Combinados:
+Além das partições individuais, os seguintes casos combinados são relevantes para a validação:
 
-
-#### Parâmetro ``close``: 
-
-``close`` é exatamente como o anterior.
-
-  - ``close`` com valor ``null``;
-  - ``close`` vazia;
-  - ``len(close)==1``;
-  - ``len(close)>1``.
-
-
-### Para combinações de entradas
-
-Fica claro que as três variáveis têm uma relação de dependência. 
-
-- (``str``, ``open``, ``close``) - ``open`` e ``close`` podem ou não estar na string. Além disso, ``open`` pode existir, mas ``close`` pode não existir em ``str`` (e vice-versa):
-  - ``str`` não contém nem ``open`` nem ``close``;
-  - ``str`` contém ``open`` mas não contém ``close``;
-  - ``str`` não contém ``open`` mas contém ``close``;
-  - ``str`` contém ``open`` e ``close``;
-  - ``str`` contém ``open`` e ``close`` muitas vezes.
-
-O documento não menciona explicitamente que as tags podem não existir em ``str``, nem menciona que a tag ``open`` pode estar presente, mas a tag de ``close`` não. Eu vi este caso por causa da minha experiência como testador.
-
-
-### Para saídas esperadas
-
-Finalmente, refleti sobre as possíveis saídas. O método retorna uma array de sub-strings. Posso ver um conjunto de possíveis saídas diferentes, tanto para o próprio array quanto para as strings dentro do array:
-
-- Array de strings
-  - array com valor ``null``;
-  - array vazio;
-  - array com um elemento;
-  - array com muitos elementos.
-- Cada string individualmente dentro do array de saída
-  - vazia;
-  - apenas um caracter;
-  - múltiplos caracteres.   
-
+1. Ambos `left` e `right` são válidos e contêm listas com dígitos no intervalo `[0-9]`.
+2. Um dos parâmetros é `null`, enquanto o outro é válido.
+3. Um dos parâmetros é uma lista vazia, enquanto o outro contém dígitos válidos.
+4. Ambos os parâmetros são listas vazias.
+5. Ambos os parâmetros contêm valores fora do intervalo `[0-9]`.
+6. Um dos parâmetros ter apenas 1 elemento, enquanto outro tem muito mais elementos.
 
 ## Passo 4 - Identificar os valores limite
 
 Bugs nos limites do domínio de entrada são comuns em sistemas de software. Quando criamos partições, elas têm valores limites próximos que "dividem" as partições equivalentes. Sempre que um valor limite é identificado, gosto de testar o que acontece com o programa quando as entradas vão de um limite para o outro. Ou seja, teste de dois pontos quando há um valor limite. Um teste é para o *on point* , que é o ponto que está dentro da partição; e o outro teste é para o "off point", que é o ponto mais próximo do valor limite que pertence à partição à qual o *on point* não pertence (ou seja, a outra partição).
 
-No caso de  ``substringsBetween()``, um limite acontece quando a string de saída passa de vazia para não vazia, isto é, o programa para de retornar vazio e (possivelmente) começará a retornar algo. Eu já cobri esse limite, pois tem partições para ambos os casos.  O método pode receber o parâmetro ``str`` com nenhuma substring, uma substring ou várias substrings. E, as tags ``open`` e ``closed`` podem não estar na string; ou, mais importante, elas podem estar em ``str``, mas sem substring entre elas. Este é um limite que vou chamar de "sem substring de saída/uma substring de saída", e ainda não foi testado, devo testar. 
+Para a entrada os valores limites podem ser: 
 
-Neste caso, sempre que identificamos um limite, criamos dois testes para ele, um para cada lado do limite (*in point* e *out point*). Para o limite "sem substring de saída/uma substring de saída", os dois testes são os seguintes:
-  - ``str`` contém ``open`` e também ``close``, mas sem caracteres entre elas
-  - ``str`` contém ``open`` e também ``close``, mas com caracteres entre elas
+- Uma lista vazia ou lista com um elemento
+- Uma lista com muitos elementos (até quanto a memória aguentar)
+- Duas entradas com tamanhos diferentes (uma entrada com 50 elementos e um com 1 elemento)
+
+Para a saída os valores limites podem ser: 
+
+- Resultado de uma soma de vários "9" em sequencia somados
 
 ## Passo 5 -  Derivar os casos de teste
 
-Idealmente, combinaríamos todas as partições que criamos para cada uma das entradas: $4 × 4 × 4 × 5 = 320$ testes. Para evitar uma explosão de casos de teste (320), vou eliminar algumas combinações de partições que possuem uma chance pequena de revelar erros. A ideia é testar casos excepcionais apenas uma vez e não combiná-los. Portanto, todas as partições com ``null`` ou vazio serão testar individualmente e não combinadas com outras partições. Também, existem partições que não necessitam ser completamente combinadas:
+Vamos criar alguns casos de testes de acordo com as partições identificadas.
 
-- ``len(str)==1`` apenas dois testes são necessários:
-  - Apenas um caracter em ``str`` que é encontrado por ``open`` e ``close`` e outro que não é;
-- não acredito que o método trata ``open`` e ``close`` de tamanhos diferentes de diferentes maneiras, então não são necessárias as 4 combinações: (``len(open)==1``, ``len(close)==1``); (``len(open)>1``, ``len(close)==1``); (``len(open)==1``, ``len(close)>1``) e ()``len(open) > 1``, ``len(close) > 1``):
-  - Apenas (``len(open)== 1``, ``len(close)==1``) e ``len(open)>1``, ``len(close)>1``). 
+### Teste de excessão 
 
-Portanto, seguindo essas duas ideias, na lista a seguir, marquei com um  [x] partições que não testarei várias vezes: 
+- T01 : left é nulo 
+- T02 : right é nulo
+- T03 : ambos é nulo
 
-- ``str``: ``null`` [x], string vazia [x], ``len(str)==1`` [x], ``len(str)>1``;
-- ``open``: ``null`` [x], empty string [x], ``len(open)==1``, ``len(open)>1``;
-- ``close``: ``null`` [x], empty string [x], ``len(close)==1``, ``len(close)>1``; 
-- (``str``, ``open``, ``close``): string não contém a tag ``open`` nem  a tag ``close``, string contém a tag ``close``, mas não contém a tag ``open``, string contém as tags ``open`` e ``close``, string contém as tags ``open`` e ``close`` muitas vezes.
+### Teste com listas vazias
 
-Podemos derivar os casos de teste realizando a combinação adequada entre as partições. 
+- T04 : left tem lista vazia
+- T05 : right tem lista vazia
+- T06 : ambos tem lista vazia 
 
-- Casos de teste de excessão
-  - T01: ``str==null``
-  - T02: ``str`` vazia
-  - T03: ``open==null``
-  - T04: ``open`` vazia
-  - T05: ``close ==null``
-  - T06: ``close`` vazia
-- Casos de teste considerando ``len(str)==1``
-  - T07: O único caracter de ``str`` casa com ``open``
-  - T08: O único caracter de ``str`` casa com ``close``
-  - T09: O único caracter de ``str`` não casa com ``open`` nem ``close``
-  - T10: O único caracter de ``str`` casa com ``open`` e ``close``
-- Casos de teste considerando ``len(str)>1``, ``len(open)==1`` e ``len(close)==1``
-  - T11: ``str`` não contém ``open`` nem ``close``
-  - T12: ``str`` contém ``open`` mas não contém but does not contain the ``close`` 
-  - T13: ``str`` contém ``close`` mas não contém ``open`` 
-  - T14: ``str`` contém ``open`` e ``close``
-  - T15: ``str`` contém ``open`` e ``close`` múltiplas vezes
-- Casos de teste considerando ``len(str)>1``, ``len(open)>1`` e ``len(close)>1``
-  - T16: similar ao T11
-  - T17: similar ao T12
-  - T18: similar ao T13 
-  - T19: similar ao T14
-  - T20: similar ao T15
-- Casos de teste de valor limite
-  - T21: ``str`` contém ``open`` e ``close`` sem caracteres entre eles
+### Teste com parâmetro não permitido
+
+- T07 : left tem um número maior que 10
+- T08 : left tem um número menor que 0 
+
+### Caso padrão, para testar cálculo 
+
+- T09 : Uma soma de duas listas com 1 elemento cada
+- T10 : Uma soma de duas listas com 2 elemento cada
+- T11 : Uma soma de duas listas com 3 elemento cada
+
+### Caso específico
+
+- T12 : Uma soma com duas listas com leve diferença de tamanho
+- T13 : Uma soma com duas listas com maior diferença de tamanho
+- T14 : uma soma com varios números 9 para teste de soma
 
 ## Passo 6 - Automatizar os casos de teste usando JUnit
 
-::: {.callout-note}
-Aqui você deve descrever as dificuldades ou limitações que teve ao implementar os casos de teste usando JUnit.
-:::
+Não tive dificuldades para implementar os casos de teste usando JUnit; minha maior dificuldade foi com o Java e suas sintaxes, com as quais não estou acostumado. Durante o teste 15, percebi que a função `add` não considera casos em que o resultado requer mais casas decimais do que os parâmetros fornecidos. Por exemplo, a soma de `[1] + [9]` resulta em `[0]`, pois o "1" da casa das dezenas não foi incluído no resultado. Acredito que isso se categorize como um erro.
 
 ## Passo 7 - Aumentar a suíte de testes por meio de experiência e criatividade
 
-Ao revisitar os testes, notei que nunca testei strings com espaços. Decidi projetar dois testes extras baseados em T15 e T20 (não alterei esses dois casos de teste, adicionei dois casos de teste extras), ambos sobre "``str`` contém as tags ``open`` e ``close`` várias vezes": 
-
-  - (T22) um para ``len(open)==1`` e ``len(close)==1``;
-  - (T23) um para ``len(open)>1`` e ``len(close)>1``, mas tamanhos de ``open`` e ``close`` bastante grandes.
+Tive uma ideia de fazer um loop de soma usando esse algoritmo, para testar a consistencia dele (T15)
