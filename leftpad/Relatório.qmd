@@ -1,0 +1,81 @@
+---
+title: "Relatório de Testes para o Método leftPad"
+author: "Danilo Balman Garcia"
+date: "`r Sys.Date()`"
+format: gfm
+---
+
+## Passo 3 - Identificação das Partições
+
+### Para cada entrada individualmente:
+
+#### Parâmetro `str`:
+- `str` é `null`: Deve retornar `null`.
+- `str` é vazia: É preenchida normalmente de acordo com parâmetro `padStr`.
+- `len(str) >= size`: Deve retornar a string original.
+- `len(str) < size`: Deve preencher corretamente até alcançar o tamanho especificado.
+
+#### Parâmetro `size`:
+- `size <= 0`: Retorna a string original sem alterações.
+- `size > len(str)`: Preenche a string até o tamanho especificado.
+
+#### Parâmetro `padStr`:
+- `padStr` é `null`: Tratado como um espaço em branco.
+- `padStr` é vazio: Tratado como um espaço em branco.
+- `len(padStr) == 1`: Deve preencher repetidamente com o caractere.
+- `len(padStr) > 1`: Deve preencher repetidamente com a sequência até alcançar o tamanho especificado.
+
+### Combinações de entradas:
+- Tamanhos de preenchimento múltiplos de `len(padStr)` ou não múltiplos.
+
+### Para saídas esperadas:
+- O retorno deve ser consistente com as combinações testadas e a especificação do método.
+
+---
+
+## Passo 4 - Identificação dos Valores Limite
+
+- `str`: Testar para `null`, vazio e strings curtas (1 caractere) e longas.
+- `size`: Testar para `-1`, `0`, `1`, `len(str)` e `len(str) + 1`.
+- `padStr`: Testar para `null`, vazio, 1 caractere, 2 caracteres e strings longas.
+
+---
+
+## Passo 5 - Derivação dos Casos de Teste
+
+De acordo com as partições identificadas, devemos criar casos de testes:
+
+### Parâmetro `str` 
+
+- T01. `leftPad(null, 5, "-")` → `null`.
+- T02. `leftPad("", 5, "-")` → `"-----"`.
+- T03. `leftPad("abc", 2, "-")` → `"abc"`.
+- T04. `leftPad("abc", 5, "-")` → `"--abc"`.
+ 
+### Parâmetro `size`
+
+- T08. `leftPad("abc", -1, "-")` → `"abc"`.
+- T08. `leftPad("abc", 20, "-")` → `"-----------------abc"`.
+
+## Parâmetro `padStr`
+
+- T05. `leftPad("abc", 5, null)` → `"  abc"`.
+- T06. `leftPad("abc", 5, "")` → `"  abc"`.
+- T07. `leftPad("abc", 6, "-")` → `"---abc"`.
+- T08. `leftPad("abc", 6, "-=")` → `"-=-abc"`.
+
+## Combinação de parâmetros
+
+- T09. `leftPad("abc", 7, "-=")` → `"-=-=abc"`.
+- T10. `leftPad("abc", 30, "(O)")` → `"(O)(O)(O)(O)(O)(O)(O)(O)(O)abc"`.
+- T11. `leftPad("abc", 28, "(O)")` → `"(O)(O)(O)(O)(O)(O)(O)(O)(abc"`.
+
+---
+
+## Passo 6 - Automação dos Casos de Teste
+
+Este é o segundo trabalho prático
+
+## Passo 7 - Aumentar a suíte de testes por meio de experiência e criatividade
+
+Não tenho uma ideia interessante para testar aqui
