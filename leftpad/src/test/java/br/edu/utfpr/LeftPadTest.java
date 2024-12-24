@@ -8,7 +8,7 @@ public class LeftPadTest {
     @Test
     void testStrParameter() {
         // T01
-        assertNull(LeftPad.leftPad(null, 5, "-"));
+        assertNull(LeftPad.leftPad(null, 5, "-")); 
 
         // T02
         assertEquals("-----", LeftPad.leftPad("", 5, "-"));
@@ -22,37 +22,37 @@ public class LeftPadTest {
 
     @Test
     void testSizeParameter() {
-        // T08 (Negative size)
+        // T05 (Negative size)
         assertEquals("abc", LeftPad.leftPad("abc", -1, "-"));
 
-        // T08 (Large size)
+        // T06 (Large size)
         assertEquals("-----------------abc", LeftPad.leftPad("abc", 20, "-"));
     }
 
     @Test
     void testPadStrParameter() {
-        // T05
+        // T07
         assertEquals("  abc", LeftPad.leftPad("abc", 5, null));
 
-        // T06
+        // T08
         assertEquals("  abc", LeftPad.leftPad("abc", 5, ""));
 
-        // T07
+        // T09
         assertEquals("---abc", LeftPad.leftPad("abc", 6, "-"));
 
-        // T08
+        // T10
         assertEquals("-=-abc", LeftPad.leftPad("abc", 6, "-="));
     }
 
     @Test
     void testParameterCombinations() {
-        // T09
+        // T11
         assertEquals("-=-=abc", LeftPad.leftPad("abc", 7, "-="));
 
-        // T10
+        // T12
         assertEquals("(O)(O)(O)(O)(O)(O)(O)(O)(O)abc", LeftPad.leftPad("abc", 30, "(O)"));
 
-        // T11
+        // T13
         assertEquals("(O)(O)(O)(O)(O)(O)(O)(O)(abc", LeftPad.leftPad("abc", 28, "(O)"));
     }
 }

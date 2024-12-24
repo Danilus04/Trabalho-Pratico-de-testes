@@ -54,21 +54,21 @@ De acordo com as partições identificadas, devemos criar casos de testes:
  
 ### Parâmetro `size`
 
-- T08. `leftPad("abc", -1, "-")` → `"abc"`.
-- T08. `leftPad("abc", 20, "-")` → `"-----------------abc"`.
+- T05. `leftPad("abc", -1, "-")` → `"abc"`.
+- T06. `leftPad("abc", 20, "-")` → `"-----------------abc"`.
 
 ## Parâmetro `padStr`
 
-- T05. `leftPad("abc", 5, null)` → `"  abc"`.
-- T06. `leftPad("abc", 5, "")` → `"  abc"`.
-- T07. `leftPad("abc", 6, "-")` → `"---abc"`.
-- T08. `leftPad("abc", 6, "-=")` → `"-=-abc"`.
+- T07. `leftPad("abc", 5, null)` → `"  abc"`.
+- T08. `leftPad("abc", 5, "")` → `"  abc"`.
+- T09. `leftPad("abc", 6, "-")` → `"---abc"`.
+- T10. `leftPad("abc", 6, "-=")` → `"-=-abc"`.
 
 ## Combinação de parâmetros
 
-- T09. `leftPad("abc", 7, "-=")` → `"-=-=abc"`.
-- T10. `leftPad("abc", 30, "(O)")` → `"(O)(O)(O)(O)(O)(O)(O)(O)(O)abc"`.
-- T11. `leftPad("abc", 28, "(O)")` → `"(O)(O)(O)(O)(O)(O)(O)(O)(abc"`.
+- T11. `leftPad("abc", 7, "-=")` → `"-=-=abc"`.
+- T12. `leftPad("abc", 30, "(O)")` → `"(O)(O)(O)(O)(O)(O)(O)(O)(O)abc"`.
+- T13. `leftPad("abc", 28, "(O)")` → `"(O)(O)(O)(O)(O)(O)(O)(O)(abc"`.
 
 ---
 
@@ -78,4 +78,4 @@ Este é o segundo trabalho prático
 
 ## Passo 7 - Aumentar a suíte de testes por meio de experiência e criatividade
 
-Não tenho uma ideia interessante para testar aqui
+Não tenho uma ideia interessante para testar aquic
