@@ -81,3 +81,37 @@ Este é o segundo trabalho prático
 Não tenho uma ideia interessante para testar aquic
 
 ## Teste a solução implementada usando teste estrutural
+
+### Passo 3 - Relatório Jacoco
+
+O relatório do JaCoCo indica que 93% do código foi coberto. No entanto, ao analisar detalhadamente, observei que a instrução `public class LeftPad {` não foi coberta. Isso é estranho, mas acredito que não deve afetar significativamente a análise do código.
+
+### Passo 4 - Critério MC/DC
+
+Analisando código, é abstraido 3 condições para decisões lógicas do código, que são
+
+### Descrição das Condições
+
+- **C1:** `str == null`  
+  - Verdadeiro (V) se a string de entrada for nula.
+
+- **C2:** `padStr == null || padStr.isEmpty()`  
+  - Verdadeiro (V) se a string de preenchimento for nula ou vazia.
+
+- **C3:** `paddingLength <= 0`  
+  - Verdadeiro (V) se o comprimento do preenchimento necessário for menor ou igual a zero.
+
+### Tabela Verdade
+
+ja que cada da valor tem um efeito indepedente no código, sendo assim é possivel obter uma cobertura MC/DC
+
+| Teste       | C1                     | C2                           | C3                                  | Resultado Esperado |
+|-------------|------------------------|------------------------------|-------------------------------------|--------------------|
+|T14          | **Verdadeiro**         | Verdadeiro                   | Verdadeiro                          |`null`              |
+|T15          | **Verdadeiro**         | Verdadeiro                   | Falso                               |`null`              |
+|T16          | **Verdadeiro**         | Falso                        | Verdadeiro                          |`null`              |
+|T17          | **Verdadeiro**         | Falso                        | Falso                               |`null`              |
+|T18          | **Falso**              | Verdadeiro                   | Verdadeiro                          |Sem mudanças        |
+|T19          | **Falso**              | Verdadeiro                   | Falso                               |String preenchida com espaços|
+|T20          | **Falso**              | Falso                        | Verdadeiro                          |Sem mudanças        |
+|T21          | **Falso**              | Falso                        | Falso                               |String preenchida com substring|

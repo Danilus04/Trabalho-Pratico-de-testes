@@ -177,6 +177,111 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="teste-a-solução-implementada-usando-teste-estrutural" class="level2">
 <h2 class="anchored" data-anchor-id="teste-a-solução-implementada-usando-teste-estrutural">Teste a solução implementada usando teste estrutural</h2>
+<section id="passo-3---relatório-jacoco" class="level3">
+<h3 class="anchored" data-anchor-id="passo-3---relatório-jacoco">Passo 3 - Relatório Jacoco</h3>
+<p>O relatório do JaCoCo indica que 93% do código foi coberto. No entanto, ao analisar detalhadamente, observei que a instrução <code>public class LeftPad {</code> não foi coberta. Isso é estranho, mas acredito que não deve afetar significativamente a análise do código.</p>
+</section>
+<section id="passo-4---critério-mcdc" class="level3">
+<h3 class="anchored" data-anchor-id="passo-4---critério-mcdc">Passo 4 - Critério MC/DC</h3>
+<p>Analisando código, é abstraido 3 condições para decisões lógicas do código, que são</p>
+</section>
+<section id="descrição-das-condições" class="level3">
+<h3 class="anchored" data-anchor-id="descrição-das-condições">Descrição das Condições</h3>
+<ul>
+<li><strong>C1:</strong> <code>str == null</code>
+<ul>
+<li>Verdadeiro (V) se a string de entrada for nula.</li>
+</ul></li>
+<li><strong>C2:</strong> <code>padStr == null || padStr.isEmpty()</code>
+<ul>
+<li>Verdadeiro (V) se a string de preenchimento for nula ou vazia.</li>
+</ul></li>
+<li><strong>C3:</strong> <code>paddingLength &lt;= 0</code>
+<ul>
+<li>Verdadeiro (V) se o comprimento do preenchimento necessário for menor ou igual a zero.</li>
+</ul></li>
+</ul>
+</section>
+<section id="tabela-verdade" class="level3">
+<h3 class="anchored" data-anchor-id="tabela-verdade">Tabela Verdade</h3>
+<p>ja que cada da valor tem um efeito indepedente no código, sendo assim é possivel obter uma cobertura MC/DC</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 19%">
+<col style="width: 24%">
+<col style="width: 29%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>TesteZ</th>
+<th>C1 (str é <code>null</code>)</th>
+<th>C2 (padStr é <code>null</code> ou vazio)</th>
+<th>C3 (tamanho do preenchimento &lt;= 0)</th>
+<th>Resultado Esperado</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>T14</td>
+<td><strong>Verdadeiro</strong></td>
+<td>Verdadeiro</td>
+<td>Verdadeiro</td>
+<td><code>null</code></td>
+</tr>
+<tr class="even">
+<td>T15</td>
+<td><strong>Verdadeiro</strong></td>
+<td>Verdadeiro</td>
+<td>Falso</td>
+<td><code>null</code></td>
+</tr>
+<tr class="odd">
+<td>T16</td>
+<td><strong>Verdadeiro</strong></td>
+<td>Falso</td>
+<td>Verdadeiro</td>
+<td><code>null</code></td>
+</tr>
+<tr class="even">
+<td>T17</td>
+<td><strong>Verdadeiro</strong></td>
+<td>Falso</td>
+<td>Falso</td>
+<td><code>null</code></td>
+</tr>
+<tr class="odd">
+<td>T18</td>
+<td><strong>Falso</strong></td>
+<td>Verdadeiro</td>
+<td>Verdadeiro</td>
+<td>Sem mudanças</td>
+</tr>
+<tr class="even">
+<td>T19</td>
+<td><strong>Falso</strong></td>
+<td>Verdadeiro</td>
+<td>Falso</td>
+<td>String preenchida com espaços</td>
+</tr>
+<tr class="odd">
+<td>T20</td>
+<td><strong>Falso</strong></td>
+<td>Falso</td>
+<td>Verdadeiro</td>
+<td>Sem mudanças</td>
+</tr>
+<tr class="even">
+<td>T21</td>
+<td><strong>Falso</strong></td>
+<td>Falso</td>
+<td>Falso</td>
+<td>String preenchida com substring</td>
+</tr>
+</tbody>
+</table>
+</section>
 </section>
 
 </main>

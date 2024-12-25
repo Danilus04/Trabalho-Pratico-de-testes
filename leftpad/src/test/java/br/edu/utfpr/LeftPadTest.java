@@ -55,4 +55,34 @@ public class LeftPadTest {
         // T13
         assertEquals("(O)(O)(O)(O)(O)(O)(O)(O)(abc", LeftPad.leftPad("abc", 28, "(O)"));
     }
+
+    @Test
+    void testNullStrParameter() {
+        // T14
+        assertNull(LeftPad.leftPad(null, -1, null), "T14: Quando 'str' é null, o resultado deve ser null.");
+
+        // T15
+        assertNull(LeftPad.leftPad(null, 5, ""), "T15: Quando 'str' é null, o resultado deve ser null.");
+
+        // T16
+        assertNull(LeftPad.leftPad(null, -1, "-"), "T16: Quando 'str' é null, o resultado deve ser null.");
+
+        // T17
+        assertNull(LeftPad.leftPad(null, -5, "-"), "T17: Quando 'str' é null, o resultado deve ser null.");
+    }
+
+    @Test
+    void testSizeAndPaddingLength() {
+        // T18
+        assertEquals("abc", LeftPad.leftPad("abc", -1, null), "T18: Quando 'size' <= tamanho da string, não deve haver mudanças.");
+
+        // T19
+        assertEquals("   abc", LeftPad.leftPad("abc", 6, null), "T19: Quando 'padStr' é null ou vazio, deve preencher com espaços.");
+
+        // T20
+        assertEquals("abc", LeftPad.leftPad("abc", -1, "-"), "T20: Quando 'size' <= tamanho da string, não deve haver mudanças.");
+
+        // T21
+        assertEquals("---abc", LeftPad.leftPad("abc", 6, "-"), "T21: Quando o preenchimento é necessário, usa 'padStr'.");
+    }
 }
