@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LeftPad.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">leftpad</a> &gt; <a href="index.source.html" class="el_package">br.edu.utfpr</a> &gt; <span class="el_source">LeftPad.java</span></div><h1>LeftPad.java</h1><pre class="source lang-java linenums">package br.edu.utfpr;
+
+<span class="nc" id="L3">public class LeftPad {</span>
+
+    /**
+     * Preenche à esquerda uma string com uma string especificada até o tamanho fornecido.
+     * 
+     * @param str    A string a ser preenchida.
+     * @param size   O tamanho máximo da string preenchida.
+     * @param padStr A string usada para preenchimento.
+     * @return A string preenchida ou a string original se o preenchimento não for necessário.
+     */
+    public static String leftPad(final String str, final int size, String padStr) {
+        // Retorna null se a entrada for null
+<span class="fc bfc" id="L15" title="All 2 branches covered.">        if (str == null) {</span>
+<span class="fc" id="L16">            return null;</span>
+        }
+
+        // Se a string de preenchimento for null ou vazia, use um espaço em branco como padrão
+<span class="fc bfc" id="L20" title="All 4 branches covered.">        if (padStr == null || padStr.isEmpty()) {</span>
+<span class="fc" id="L21">            padStr = &quot; &quot;;</span>
+        }
+
+        // Calcula o número de caracteres de preenchimento necessários
+<span class="fc" id="L25">        int paddingLength = size - str.length();</span>
+
+        // Se não for necessário preencher, retorna a string original
+<span class="fc bfc" id="L28" title="All 2 branches covered.">        if (paddingLength &lt;= 0) {</span>
+<span class="fc" id="L29">            return str;</span>
+        }
+
+        // Repete a string de preenchimento até alcançar o tamanho necessário
+<span class="fc" id="L33">        StringBuilder padding = new StringBuilder();</span>
+<span class="fc bfc" id="L34" title="All 2 branches covered.">        while (padding.length() &lt; paddingLength) {</span>
+<span class="fc" id="L35">            padding.append(padStr);</span>
+        }
+
+        // Garante que o preenchimento não exceda o tamanho necessário
+<span class="fc" id="L39">        padding.setLength(paddingLength);</span>
+
+        // Retorna a string preenchida
+<span class="fc" id="L42">        return padding + str;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

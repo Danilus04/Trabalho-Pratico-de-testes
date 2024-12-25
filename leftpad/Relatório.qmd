@@ -5,35 +5,35 @@ date: "`r Sys.Date()`"
 format: gfm
 ---
 
-## Passo 3 - Identificação das Partições
+### Passo 3 - Identificação das Partições
 
-### Para cada entrada individualmente:
+#### Para cada entrada individualmente:
 
-#### Parâmetro `str`:
+##### Parâmetro `str`:
 - `str` é `null`: Deve retornar `null`.
 - `str` é vazia: É preenchida normalmente de acordo com parâmetro `padStr`.
 - `len(str) >= size`: Deve retornar a string original.
 - `len(str) < size`: Deve preencher corretamente até alcançar o tamanho especificado.
 
-#### Parâmetro `size`:
+##### Parâmetro `size`:
 - `size <= 0`: Retorna a string original sem alterações.
 - `size > len(str)`: Preenche a string até o tamanho especificado.
 
-#### Parâmetro `padStr`:
+##### Parâmetro `padStr`:
 - `padStr` é `null`: Tratado como um espaço em branco.
 - `padStr` é vazio: Tratado como um espaço em branco.
 - `len(padStr) == 1`: Deve preencher repetidamente com o caractere.
 - `len(padStr) > 1`: Deve preencher repetidamente com a sequência até alcançar o tamanho especificado.
 
-### Combinações de entradas:
+#### Combinações de entradas:
 - Tamanhos de preenchimento múltiplos de `len(padStr)` ou não múltiplos.
 
-### Para saídas esperadas:
+#### Para saídas esperadas:
 - O retorno deve ser consistente com as combinações testadas e a especificação do método.
 
 ---
 
-## Passo 4 - Identificação dos Valores Limite
+### Passo 4 - Identificação dos Valores Limite
 
 - `str`: Testar para `null`, vazio e strings curtas (1 caractere) e longas.
 - `size`: Testar para `-1`, `0`, `1`, `len(str)` e `len(str) + 1`.
@@ -41,30 +41,30 @@ format: gfm
 
 ---
 
-## Passo 5 - Derivação dos Casos de Teste
+### Passo 5 - Derivação dos Casos de Teste
 
 De acordo com as partições identificadas, devemos criar casos de testes:
 
-### Parâmetro `str` 
+#### Parâmetro `str` 
 
 - T01. `leftPad(null, 5, "-")` → `null`.
 - T02. `leftPad("", 5, "-")` → `"-----"`.
 - T03. `leftPad("abc", 2, "-")` → `"abc"`.
 - T04. `leftPad("abc", 5, "-")` → `"--abc"`.
  
-### Parâmetro `size`
+#### Parâmetro `size`
 
 - T05. `leftPad("abc", -1, "-")` → `"abc"`.
 - T06. `leftPad("abc", 20, "-")` → `"-----------------abc"`.
 
-## Parâmetro `padStr`
+#### Parâmetro `padStr`
 
 - T07. `leftPad("abc", 5, null)` → `"  abc"`.
 - T08. `leftPad("abc", 5, "")` → `"  abc"`.
 - T09. `leftPad("abc", 6, "-")` → `"---abc"`.
 - T10. `leftPad("abc", 6, "-=")` → `"-=-abc"`.
 
-## Combinação de parâmetros
+### Combinação de parâmetros
 
 - T11. `leftPad("abc", 7, "-=")` → `"-=-=abc"`.
 - T12. `leftPad("abc", 30, "(O)")` → `"(O)(O)(O)(O)(O)(O)(O)(O)(O)abc"`.
@@ -72,10 +72,12 @@ De acordo com as partições identificadas, devemos criar casos de testes:
 
 ---
 
-## Passo 6 - Automação dos Casos de Teste
+### Passo 6 - Automação dos Casos de Teste
 
 Este é o segundo trabalho prático
 
-## Passo 7 - Aumentar a suíte de testes por meio de experiência e criatividade
+### Passo 7 - Aumentar a suíte de testes por meio de experiência e criatividade
 
 Não tenho uma ideia interessante para testar aquic
+
+## Teste a solução implementada usando teste estrutural
