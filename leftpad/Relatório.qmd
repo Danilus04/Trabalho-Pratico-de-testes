@@ -115,3 +115,8 @@ ja que cada da valor tem um efeito indepedente no código, sendo assim é possiv
 |T19          | **Falso**              | Verdadeiro                   | Falso                               |String preenchida com espaços|
 |T20          | **Falso**              | Falso                        | Verdadeiro                          |Sem mudanças        |
 |T21          | **Falso**              | Falso                        | Falso                               |String preenchida com substring|
+
+O jacoco reportou uma cobertura de 93% dos casos de teste, do 14 até o 21, a mesma dos casos anteriores. Esses testes, sozinhos, cobrem praticamente 100% do código.
+
+Aparentemente, não foram encontrados erros significativos no código.
+
